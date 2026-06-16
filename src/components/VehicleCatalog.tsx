@@ -55,76 +55,115 @@ function VehicleCatalog() {
         <span className="badge bg-dark fs-6">Exibindo: {filteredVehicles.length}</span>
       </div>
 
-      <div className="row mb-4">
-        <div className="col-12">
-          <div className="d-flex gap-3 overflow-auto pb-2">
+      <div className="row g-3 mb-4 align-items-center">
+        <div className="col-lg-8">
+          <div className="d-flex gap-2 overflow-auto py-1">
             <div className="border rounded px-3 py-2 bg-white shadow-sm flex-fill text-center">
-              <span className="d-block small text-muted text-uppercase fw-bold">Carros</span>
+              <span className="d-block small text-muted text-uppercase fw-bold" style={{ fontSize: '0.7rem' }}>Carros</span>
               <span className="fs-5 fw-bold text-primary">{getStatCount('Carro')}</span>
             </div>
             <div className="border rounded px-3 py-2 bg-white shadow-sm flex-fill text-center">
-              <span className="d-block small text-muted text-uppercase fw-bold">Motos</span>
+              <span className="d-block small text-muted text-uppercase fw-bold" style={{ fontSize: '0.7rem' }}>Motos</span>
               <span className="fs-5 fw-bold text-success">{getStatCount('Moto')}</span>
             </div>
             <div className="border rounded px-3 py-2 bg-white shadow-sm flex-fill text-center">
-              <span className="d-block small text-muted text-uppercase fw-bold">Caminhões</span>
+              <span className="d-block small text-muted text-uppercase fw-bold" style={{ fontSize: '0.7rem' }}>Caminhões</span>
               <span className="fs-5 fw-bold text-danger">{getStatCount('Caminhão')}</span>
             </div>
             <div className="border rounded px-3 py-2 bg-white shadow-sm flex-fill text-center">
-              <span className="d-block small text-muted text-uppercase fw-bold">Ônibus</span>
+              <span className="d-block small text-muted text-uppercase fw-bold" style={{ fontSize: '0.7rem' }}>Ônibus</span>
               <span className="fs-5 fw-bold text-warning">{getStatCount('Ônibus')}</span>
             </div>
+          </div>
+        </div>
+        
+        <div className="col-lg-4">
+          <div className="position-relative">
+            <span className="position-absolute top-50 start-0 translate-middle-y ms-3 text-muted">
+              <i className="bi bi-search"></i>
+            </span>
+            <input 
+              type="text" 
+              className="form-control ps-5 py-2 shadow-sm border-0 bg-white" 
+              placeholder="Filtrar por placa ou tipo..." 
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
           </div>
         </div>
       </div>
 
       <div className="row mb-4">
-        <div className="col-lg-8 mb-3 mb-lg-0">
-          <div className="card border-0 shadow-sm p-4 h-100 bg-white">
-            <h6 className="text-dark fw-bold text-uppercase small mb-3">
-              <i className="bi bi-plus-circle me-2"></i>Registro Manual / Simulação
+        <div className="col-12">
+          <div className="card border-0 shadow-sm p-4 bg-white">
+            <h6 className="text-dark fw-bold text-uppercase small mb-3 d-flex align-items-center gap-2">
+              <i className="bi bi-plus-circle-fill text-secondary"></i>
+              Simulador (Registro Manual)
             </h6>
-            <form onSubmit={handleSubmit} className="row g-3">
-              <div className="col-md-3">
-                <label className="form-label small fw-bold">Placa</label>
-                <input type="text" className="form-control form-control-sm" name="plate" value={formData.plate} onChange={handleInputChange} required placeholder="AAA-0000" />
+            
+            <form onSubmit={handleSubmit} className="row g-3 align-items-end">
+              <div className="col-sm-6 col-md-3">
+                <label className="form-label small fw-bold text-muted">Placa do Veículo</label>
+                <input 
+                  type="text" 
+                  className="form-control bg-light border-0" 
+                  name="plate" 
+                  value={formData.plate} 
+                  onChange={handleInputChange} 
+                  required 
+                  placeholder="Ex: AAA-0000" 
+                />
               </div>
-              <div className="col-md-3">
-                <label className="form-label small fw-bold">Tipo</label>
-                <select className="form-select form-select-sm" name="type" value={formData.type} onChange={handleInputChange} required>
+              
+              <div className="col-sm-6 col-md-2">
+                <label className="form-label small fw-bold text-muted">Classificação</label>
+                <select 
+                  className="form-select bg-light border-0" 
+                  name="type" 
+                  value={formData.type} 
+                  onChange={handleInputChange} 
+                  required
+                >
                   <option value="Carro">Carro</option>
                   <option value="Moto">Moto</option>
                   <option value="Caminhão">Caminhão</option>
                   <option value="Ônibus">Ônibus</option>
                 </select>
               </div>
-              <div className="col-md-3">
-                <label className="form-label small fw-bold">Horário</label>
-                <input type="time" className="form-control form-control-sm" name="detectionTime" value={formData.detectionTime} onChange={handleInputChange} required />
+              
+              <div className="col-sm-6 col-md-3">
+                <label className="form-label small fw-bold text-muted">Horário da Detecção</label>
+                <input 
+                  type="time" 
+                  className="form-control bg-light border-0" 
+                  name="detectionTime" 
+                  value={formData.detectionTime} 
+                  onChange={handleInputChange} 
+                  required 
+                />
               </div>
-              <div className="col-md-3">
-                <label className="form-label small fw-bold">Confiança (%)</label>
-                <div className="d-flex gap-2">
-                  <input type="number" step="0.1" className="form-control form-control-sm" name="confidence" value={formData.confidence} onChange={handleInputChange} min="0" max="100" required />
-                  <button type="submit" className="btn btn-dark btn-sm fw-bold">Add</button>
-                </div>
+              
+              <div className="col-sm-6 col-md-2">
+                <label className="form-label small fw-bold text-muted">Confiança IA (%)</label>
+                <input 
+                  type="number" 
+                  step="0.1" 
+                  className="form-control bg-light border-0" 
+                  name="confidence" 
+                  value={formData.confidence} 
+                  onChange={handleInputChange} 
+                  min="0" 
+                  max="100" 
+                  required 
+                />
+              </div>
+              
+              <div className="col-12 col-md-2">
+                <button type="submit" className="btn btn-dark w-100 fw-bold d-flex align-items-center justify-content-center gap-2">
+                  <i className="bi bi-plus-lg"></i> Adicionar
+                </button>
               </div>
             </form>
-          </div>
-        </div>
-
-        <div className="col-lg-4">
-          <div className="card border-0 shadow-sm p-4 h-100 bg-white d-flex justify-content-center">
-            <h6 className="text-dark fw-bold text-uppercase small mb-3">
-              <i className="bi bi-search me-2"></i>Buscar Veículo
-            </h6>
-            <input 
-              type="text" 
-              className="form-control" 
-              placeholder="Buscar por placa ou tipo..." 
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
           </div>
         </div>
       </div>
